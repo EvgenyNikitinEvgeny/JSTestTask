@@ -9,8 +9,6 @@ let elemSelected
 let selectedNumber
 let arrSelectedNumber = []
 let arrResult = []
-let newCells = []
-let filterCells = []
 
 let state = [
   [2, 2, 1, 2, 1, 2],
@@ -32,15 +30,13 @@ const clearField = () => {    // clear the element marking
   }) 
   arrSelectedNumber = []
   arrResult = []
-  newCells = []
-  filterCells = []
 }
 
 button.addEventListener('click', clearField);
 
 const findElem = (x, y) => {   // search for cells according to the condition
-  newCells = []
-  filterCells = []
+  const newCells = []
+  const filterCells = []
   newCells.push([x + 1, y])
   newCells.push([x - 1, y])
   newCells.push([x, y + 1])
@@ -82,7 +78,7 @@ const creatArrSelectedCells = (arrSelectedNumber, elemSelected) => {   // create
 cells.forEach((elem, index) => {                     //by going through all the elements of the field
   elem.addEventListener('click', (e) => {
     console.log(`${e.target.innerText} - ${index}`)
-    elem.classList.add('Great');
+    elem.classList.add('clicked-item');
     selectedNumber = e.target.innerText
 
     state.forEach((row, indexRow) =>{
@@ -92,8 +88,10 @@ cells.forEach((elem, index) => {                     //by going through all the 
           const elem = fieldMatrix[indexRow][indexColom]
       
           console.log(`Start- ${selectedNumber}`)
-          if (elem.classList.contains('Great')) {    // individuate the selected cell
+          if (elem.classList.contains('clicked-item')) {    // individuate the selected cell
             elemSelected = [indexRow, indexColom]
+            elem.classList.remove('clicked-item')
+
           }
         }
       })
