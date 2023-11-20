@@ -5,10 +5,10 @@ const field = document.querySelector('tbody');
 const button = document.querySelector('.message');
 const fieldChilren = [...field.children];
 const fieldMatrix = fieldChilren.map(row => [...row.children]);
-let elemSelected
-let selectedNumber
-let arrSelectedNumber = []
-let arrResult = []
+let elemSelected  //coordinates of the selected element
+let selectedNumber //value of the selected element
+let arrSelectedNumber = []  //array elements with the value of the selected element over the whole field
+let arrResult = []  //array elements with the value of the selected element according to the given conditionsi
 
 let state = [
   [2, 2, 1, 2, 1, 2],
@@ -43,13 +43,10 @@ const findElem = (x, y) => {   // search for cells according to the condition
   newCells.push([x, y - 1])
  
   newCells.forEach(cell => {
-    console.log(arrSelectedNumber.some(item => item[0] === cell[0] && item[1] === cell[1]))
-    console.log(!arrResult.some(item => item[0] === cell[0] && item[1] === cell[1]))
     if(arrSelectedNumber.some(item => item[0] === cell[0] && item[1] === cell[1]) 
       && !arrResult.some(item => item[0] === cell[0] && item[1] === cell[1])) {
       filterCells.push(cell)
       arrResult.push(cell)
-      console.log(`Result in find- ${arrResult}`)
     }
   })
 
@@ -58,7 +55,6 @@ const findElem = (x, y) => {   // search for cells according to the condition
     findElem(cell[0], cell[1])
     })
   } else {
-    console.log(`END arrResult - ${arrResult}`)
     arrResult.forEach (element => {    // label the cells that match the condition
       const elem = fieldMatrix[element[0]][element[1]]
       elem.classList.add('field-cell--8');
@@ -77,7 +73,6 @@ const creatArrSelectedCells = (arrSelectedNumber, elemSelected) => {   // create
 
 cells.forEach((elem, index) => {                     //by going through all the elements of the field
   elem.addEventListener('click', (e) => {
-    console.log(`${e.target.innerText} - ${index}`)
     elem.classList.add('clicked-item');
     selectedNumber = e.target.innerText
 
@@ -87,7 +82,6 @@ cells.forEach((elem, index) => {                     //by going through all the 
           arrSelectedNumber.push([indexRow, indexColom])  // create an array of elements with the content as in the selected cell 
           const elem = fieldMatrix[indexRow][indexColom]
       
-          console.log(`Start- ${selectedNumber}`)
           if (elem.classList.contains('clicked-item')) {    // individuate the selected cell
             elemSelected = [indexRow, indexColom]
             elem.classList.remove('clicked-item')
